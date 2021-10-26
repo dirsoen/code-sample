@@ -1,0 +1,44 @@
+server:
+  port: 11115
+
+spring:
+  application:
+    name: qygly-third-party-srv-demo
+  cloud:
+    loadbalancer:
+      ribbon:
+        # Ribbon处于维护模式，不要启用：
+        enabled: false
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id:  ${spring.cloud.client.ip-address}:${server.port}
+    # 每隔多久心跳一次：
+    lease-renewal-interval-in-seconds: 5
+    # 超过多久没心跳则认为死亡：
+    lease-expiration-duration-in-seconds: 10
+  client:
+    serviceUrl:
+      defaultZone: http://qygly:123456@125.77.165.188:8800/eureka/
+    # 每隔多少秒去eureka server获取一次清单：
+    registry-fetch-interval-seconds: 10
+
+# 自动登录qygly平台的设置：
+qygly:
+  ext-rest-helper:
+    # 启用FeignClient：
+    enable-feign-client: true
+    # 启用FeignClient的配置：
+    enable-feign-client-config: true
+    # 启用登录保持：
+    enable-login-keeper: true
+
+    # 设置登录保持的相关信息：
+    login-keeper:
+      userCode: tylin-tech-srv
+      # 经RSA公钥加密后的用户密码：
+      userPsd: YBgIC/Du4MhtAQUcn2iHQRcH9815qrRctWFdOmMeh3tazHqIgIfmxto5x4MvFPU/Y/NzQ+F/1yk8/OASRYi5StcndYOivNiWk7KPooYp1KTRiI0cVqrN2G/ZBNdI5LhFW76w6nVa+qVj3ik3Se7wZoVpHJvMVbOBsbXJoKVK2Xk=
+      valiCodeReqKey: ABCDEFGHIJKLMNOPQRSTUVWXYZ123456
+      valiCode: 7890
+      orgCode: TEST
