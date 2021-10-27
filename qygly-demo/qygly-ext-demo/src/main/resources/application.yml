@@ -12,9 +12,9 @@ spring:
     host: 125.77.165.188
     port: 6379
 #   单机、哨兵公用password、database：
-#    password:
+    password: redis@1234!
 #    企业管理云的REDIS库：
-    database: 7
+    database: 10
 #   哨兵使用sentinel.master、sentinel.nodes：
 #    sentinel:
 #      master:

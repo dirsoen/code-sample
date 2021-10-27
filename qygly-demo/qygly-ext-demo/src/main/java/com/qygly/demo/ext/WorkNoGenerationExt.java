@@ -1,6 +1,8 @@
 package com.qygly.demo.ext;
 
 import com.qygly.ext.jar.helper.ExtJarHelper;
+import com.qygly.shared.ad.entity.EntityInfo;
+import com.qygly.shared.ad.sev.SevInfo;
 import com.qygly.shared.interaction.EntityRecord;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import java.time.LocalDateTime;
@@ -16,10 +18,29 @@ import java.util.concurrent.TimeUnit;
 public class WorkNoGenerationExt {
 
     public static final String DATE_FORMAT_YYYYMMDD = "yyyyMMdd";
+    public static final String BDZJ_ORKNOPREFIX = "BDZJ";
+    public static final String CGZJ_ORKNOPREFIX = "CGZJ";
+    public static final String JHMB_ORKNOPREFIX = "JHMB";
 
-    public void createWorkNo(String workNoPrefix) {
+    public void createBDWorkNo(){
+        createWorkNo(BDZJ_ORKNOPREFIX, "CODE");
+    }
+
+    public void createCGWorkNo(){
+        createWorkNo(CGZJ_ORKNOPREFIX, "CODE");
+    }
+
+    public void createBJHWorkNo(){
+        createWorkNo(JHMB_ORKNOPREFIX, "CODE");
+    }
+
+    private void createWorkNo(String workNoPrefix, String fieldName) {
         List<EntityRecord> entityRecordList = ExtJarHelper.entityRecordList.get();
         StringRedisTemplate redisTemplate = ExtJarHelper.stringRedisTemplate.get();
+
+//        SevInfo sevInfo = ExtJarHelper.sevInfo.get();
+//        EntityInfo entityInfo = sevInfo.entityInfo;
+//        String code = entityInfo.code;
 
         //编号初始化
         LocalDateTime now = LocalDateTime.now();
@@ -38,14 +59,13 @@ public class WorkNoGenerationExt {
             redisTemplate.opsForValue().set(workNo, num.toString(), 0);
         }
         //生成业务编号
-        workNo = getWorkNo(workNoPrefix, num);
+        workNo = getWorkNo(workNo, num);
 
         if (entityRecordList != null) {
             for (EntityRecord entityRecord : entityRecordList) {
-                entityRecord.valueMap.put("CODE", workNo);
-
+                entityRecord.valueMap.put(fieldName, workNo);
                 entityRecord.extraEditableAttCodeList = new ArrayList<>();
-                entityRecord.extraEditableAttCodeList.add("CODE");
+                entityRecord.extraEditableAttCodeList.add(fieldName);
             }
         }
     }
