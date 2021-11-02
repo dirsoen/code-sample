@@ -74,12 +74,13 @@ public class WorkNoGenerationExt {
         return workNoPrefix+ now.format(DateTimeFormatter.ofPattern(DATE_FORMAT_YYYYMMDD));
     }
 
-    private String getWorkNo(String workNoPrefix,Integer num) {
-        return workNoPrefix + String.format("%03d", num);
-    }
 
     private Long getExpireAtTime(LocalDateTime now){
         LocalDateTime midnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         return ChronoUnit.MILLIS.between(LocalDateTime.now(),midnight);
+    }
+
+    private String getWorkNo(String workNoPrefix,Integer num) {
+        return num < 1000 ? workNoPrefix + String.format("%03d", num) : workNoPrefix + num.toString();
     }
 }
