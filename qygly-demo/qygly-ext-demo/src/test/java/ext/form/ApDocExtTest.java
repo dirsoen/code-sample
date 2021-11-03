@@ -36,16 +36,12 @@ public class ApDocExtTest {
 
         FormInfoModel formInfoModel = new FormInfoModel();
         formInfoModel.setFormInfoList(Lists.newArrayList(
-                new FieldInfoModel("key1", "v1", Boolean.TRUE, 1),
-                new FieldInfoModel("key2", "v2", Boolean.TRUE, 2)));
-        formInfoModel.setFormInfoFieldCount(2);
-        formInfoModel.setFormInfoListCount(4);
+                new FieldInfoModel("key1", "v1", 1, 1, 0),
+                new FieldInfoModel("key2", "v2", 1, 2, 0)));
 
         formInfoModel.setCustomFieldList(Lists.newArrayList(
-                new FieldInfoModel("key1", "v1", Boolean.TRUE, 1),
-                new FieldInfoModel("key2", "v2", Boolean.TRUE, 2)));
-        formInfoModel.setCustomFieldCount(2);
-        formInfoModel.setCustomFieldListCount(4);
+                new FieldInfoModel("key1", "v1", 1, 1, 0),
+                new FieldInfoModel("key2", "v2", 1, 2, 0)));
 
         formCreateModel.setFormInfo(formInfoModel);
         return formCreateModel;

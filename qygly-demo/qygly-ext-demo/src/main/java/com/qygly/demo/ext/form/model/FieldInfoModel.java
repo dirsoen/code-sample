@@ -12,20 +12,23 @@ public class FieldInfoModel {
     public FieldInfoModel() {
     }
     
-    public FieldInfoModel(String key, String value, Boolean isMandatory, Integer order) {
+    public FieldInfoModel(String key, String value, Integer isMandatory, Integer order, Integer regionOrder) {
         this.key = key;
         this.value = value;
         this.isMandatory = isMandatory;
         this.order = order;
+        this.regionOrder = regionOrder;
     }
 
     private String key;
 
     private String value = " ";
 
-    private Boolean isMandatory;
+    private Integer isMandatory;
 
     private Integer order;
+    //区域排序 单行-单数 多行-偶数
+    private Integer regionOrder;
 
     @Override
     public String toString() {
