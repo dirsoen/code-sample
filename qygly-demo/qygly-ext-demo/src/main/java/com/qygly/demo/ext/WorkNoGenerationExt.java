@@ -22,14 +22,15 @@ public class WorkNoGenerationExt {
     public static final String CGZJ_ORKNOPREFIX = "CGZJ";
     public static final String JHMB_ORKNOPREFIX = "JHMB";
 
+    //表单组件编号生成
     public void createBDWorkNo(){
         createWorkNo(BDZJ_ORKNOPREFIX, "CODE");
     }
-
+    //成果组件编号生成
     public void createCGWorkNo(){
         createWorkNo(CGZJ_ORKNOPREFIX, "CODE");
     }
-
+    //计划模板编号生成
     public void createBJHWorkNo(){
         createWorkNo(JHMB_ORKNOPREFIX, "CODE");
     }
