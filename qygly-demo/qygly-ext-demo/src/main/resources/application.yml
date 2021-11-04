@@ -45,4 +45,4 @@ server:
 
 qygly:
   ext-jar-debug:
-    debugger-name: demo-ext
+    debugger-name: form-ext

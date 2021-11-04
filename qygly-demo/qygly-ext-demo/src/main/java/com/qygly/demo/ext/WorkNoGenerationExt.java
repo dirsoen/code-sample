@@ -22,14 +22,15 @@ public class WorkNoGenerationExt {
     public static final String CGZJ_ORKNOPREFIX = "CGZJ";
     public static final String JHMB_ORKNOPREFIX = "JHMB";
 
+    //表单组件编号生成
     public void createBDWorkNo(){
         createWorkNo(BDZJ_ORKNOPREFIX, "CODE");
     }
-
+    //成果组件编号生成
     public void createCGWorkNo(){
         createWorkNo(CGZJ_ORKNOPREFIX, "CODE");
     }
-
+    //计划模板编号生成
     public void createBJHWorkNo(){
         createWorkNo(JHMB_ORKNOPREFIX, "CODE");
     }
@@ -70,17 +71,42 @@ public class WorkNoGenerationExt {
         }
     }
 
-    private String getWorkNoPrefix(String workNoPrefix, LocalDateTime now){
+    public static String createBDWorkNo(StringRedisTemplate redisTemplate){
+        return createWorkNo(BDZJ_ORKNOPREFIX, "CODE", redisTemplate);
+    }
+
+    public static String createWorkNo(String workNoPrefix, String fieldName, StringRedisTemplate redisTemplate){
+        //编号初始化
+        LocalDateTime now = LocalDateTime.now();
+        Integer num = 0;
+        String workNo = getWorkNoPrefix(workNoPrefix, now);
+
+        //加锁
+        String redisNum = redisTemplate.opsForValue().get(workNo);
+        if (Objects.isNull(redisNum)){
+            //当天首次生成设置redis
+            redisTemplate.opsForValue().set(workNo, num.toString(), getExpireAtTime(now), TimeUnit.MILLISECONDS);
+        } else {
+            num = Integer.valueOf(redisNum);
+            ++num;
+            //更新redis对应数值
+            redisTemplate.opsForValue().set(workNo, num.toString(), 0);
+        }
+        //生成业务编号
+        return getWorkNo(workNo, num);
+    }
+
+    public static String getWorkNoPrefix(String workNoPrefix, LocalDateTime now){
         return workNoPrefix+ now.format(DateTimeFormatter.ofPattern(DATE_FORMAT_YYYYMMDD));
     }
 
 
-    private Long getExpireAtTime(LocalDateTime now){
+    public static Long getExpireAtTime(LocalDateTime now){
         LocalDateTime midnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         return ChronoUnit.MILLIS.between(LocalDateTime.now(),midnight);
     }
 
-    private String getWorkNo(String workNoPrefix,Integer num) {
+    public static String getWorkNo(String workNoPrefix,Integer num) {
         return num < 1000 ? workNoPrefix + String.format("%03d", num) : workNoPrefix + num.toString();
     }
 }
