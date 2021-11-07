@@ -2,27 +2,29 @@ package com.qygly.demo.ext.entity;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author daiguanjun
  */
 @Data
 public class Region {
-    private Object regionType;
-    private Object order;
-    private Object regionId;
-    private Object regionTypeId;
-    private Object isFromMaster;
+    private Integer regionType;
+    private String regionTypeName;
+    private String regionId;
+    private Integer isFromMaster;
+    private Integer order;
     private List<Field> fields;
 
-    public Region(Object regionType, Object order, Object regionId, Object regionTypeId, Object isFromMaster) {
-        this.regionType = regionType;
-        this.order = order;
-        this.regionId = regionId;
-        this.regionTypeId = regionTypeId;
-    }
+    private List<Map<String, String >> rows;
 
-    public Region() {
+    public Region(Object regionType, Object regionId, Object isFromMaster, Object regionTypeName, Object order) {
+        this.regionType = (Integer) regionType;
+        this.regionId = (String) regionId;
+        this.isFromMaster = (Integer) isFromMaster;
+        this.regionTypeName = (String) regionTypeName;
+        this.order = (Integer) order;
     }
 }

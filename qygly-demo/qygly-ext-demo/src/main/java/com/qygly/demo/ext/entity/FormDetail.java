@@ -1,6 +1,8 @@
 package com.qygly.demo.ext.entity;
 
 import lombok.Data;
+import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -9,27 +11,28 @@ import java.util.List;
  */
 @Data
 public class FormDetail {
-    private Object id;
-    private Object name;
-    private Object masterId;
-    private Object masterName;
-    private Object type;
-    private Object typeId;
-    private Object isMaster;
-    private Object formInstructions;
+    private String formId;
+    private String formName;
+    private String formCode;
+    private String masterId;
+    private String masterName;
+    private Integer formType;
+    private String typeName;
+    private Integer isMaster;
+    private String remark;
+
     private List<Region> regions;
 
-    public FormDetail(Object id, Object name, Object masterId, Object masterName, Object type, Object typeId, Object isMaster, Object formInstructions) {
-        this.id = id;
-        this.name = name;
-        this.masterId = masterId;
-        this.masterName = masterName;
-        this.type = type;
-        this.typeId = typeId;
-        this.isMaster = isMaster;
-        this.formInstructions = formInstructions;
-    }
-
-    public FormDetail() {
+    public FormDetail(Object formId, Object formName, Object formCode, Object masterId,
+                      Object masterName, Object formType, Object typeName, Object isMaster, Object remark) {
+        this.formId = (String) formId;
+        this.formName = (String) formName;
+        this.formCode = (String) formCode;
+        this.masterId = (String) masterId;
+        this.masterName = (String) masterName;
+        this.formType = Integer.parseInt((String) formType);
+        this.typeName = (String) typeName;
+        this.isMaster = (Integer) isMaster;
+        this.remark = (String) remark;
     }
 }

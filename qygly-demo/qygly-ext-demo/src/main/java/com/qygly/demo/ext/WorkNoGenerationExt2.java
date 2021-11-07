@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author xuzhifeng
  * @Date 2021/10/27 3:26 下午
  */
-public class WorkNoGenerationExt {
+public class WorkNoGenerationExt2 {
 
     public static final String DATE_FORMAT_YYYYMMDD = "yyyyMMdd";
     public static final String BDZJ_ORKNOPREFIX = "BDZJ";
@@ -71,7 +71,7 @@ public class WorkNoGenerationExt {
         }
     }
 
-    public static String createBDWorkNo(StringRedisTemplate redisTemplate){
+    public static String createBDNo(StringRedisTemplate redisTemplate){
         return createWorkNo(BDZJ_ORKNOPREFIX, "CODE", redisTemplate);
     }
 
